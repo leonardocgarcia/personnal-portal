@@ -49,4 +49,6 @@ src/components/         Header, Footer, PostCard, TagBadge, TagFilter
 
 ## Deploy
 
-Projeto pronto para deploy na [Vercel](https://vercel.com) — basta importar o repositório Git, sem variáveis de ambiente necessárias.
+- Produção: https://leocgarcia.me (alias também disponível em https://personnal-portal.vercel.app)
+- Repositório: https://github.com/leonardocgarcia/personnal-portal
+- Deploy automático via integração Git da Vercel — todo push em `main` gera um deploy de produção; outras branches geram preview deployments.
