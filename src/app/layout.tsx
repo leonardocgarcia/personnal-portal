@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { SITE } from "@/lib/site";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,10 +17,10 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Portal Pessoal",
-    template: "%s · Portal Pessoal",
+    default: SITE.name,
+    template: `%s · ${SITE.name}`,
   },
-  description: "Pensamentos, estudos e recomendações.",
+  description: SITE.tagline,
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

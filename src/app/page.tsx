@@ -1,5 +1,6 @@
 import { getAllPosts, getPostsByTag } from "@/lib/posts";
 import { isTag } from "@/lib/tags";
+import { SITE } from "@/lib/site";
 import { PostCard } from "@/components/post-card";
 import { TagFilter } from "@/components/tag-filter";
 
@@ -12,13 +13,10 @@ export default async function Home({ searchParams }: PageProps<"/">) {
 
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">
-          Pensamentos, estudos e recomendações
+      <div className="mb-10">
+        <h1 className="text-2xl font-bold text-balance text-zinc-900 dark:text-zinc-50">
+          {SITE.tagline}
         </h1>
-        <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
-          Um feed único, filtrável por tipo de conteúdo.
-        </p>
       </div>
 
       <div className="mb-8">
