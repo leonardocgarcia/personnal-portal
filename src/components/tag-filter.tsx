@@ -8,8 +8,8 @@ export function TagFilter({ active }: { active?: Tag }) {
         href="/"
         className={`rounded-full px-3 py-1 text-sm font-medium transition-colors ${
           !active
-            ? "bg-zinc-900 text-zinc-50 dark:bg-zinc-50 dark:text-zinc-900"
-            : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700"
+            ? "bg-foreground text-background"
+            : "bg-surface text-muted hover:bg-surface-hover"
         }`}
       >
         Tudo
@@ -20,8 +20,8 @@ export function TagFilter({ active }: { active?: Tag }) {
           href={`/?tag=${tag}`}
           className={`rounded-full px-3 py-1 text-sm font-medium transition-colors ${
             active === tag
-              ? "bg-zinc-900 text-zinc-50 dark:bg-zinc-50 dark:text-zinc-900"
-              : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700"
+              ? "bg-foreground text-background"
+              : "bg-surface text-muted hover:bg-surface-hover"
           }`}
         >
           {TAG_LABELS[tag]}

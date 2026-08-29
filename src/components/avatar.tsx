@@ -18,7 +18,7 @@ export function Avatar({
 
   return (
     <div
-      className={`flex ${dims} shrink-0 items-center justify-center rounded-full bg-zinc-900 font-semibold text-zinc-50 dark:bg-zinc-50 dark:text-zinc-900`}
+      className={`flex ${dims} shrink-0 items-center justify-center rounded-full bg-foreground font-semibold text-background`}
       aria-hidden="true"
     >
       {initials(name)}

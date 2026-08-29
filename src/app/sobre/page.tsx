@@ -14,16 +14,16 @@ export default function SobrePage() {
       <div className="flex items-center gap-4">
         <Avatar name={SITE.name} size="lg" />
         <div>
-          <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">{SITE.name}</h1>
+          <h1 className="text-2xl font-bold text-foreground">{SITE.name}</h1>
           <SocialLinks className="mt-2" />
         </div>
       </div>
 
-      <p className="mt-8 text-base leading-7 text-zinc-700 dark:text-zinc-300">{SITE.bio}</p>
+      <p className="mt-8 text-base leading-7 text-foreground/90">{SITE.bio}</p>
 
-      <p className="mt-8 text-sm text-zinc-500 dark:text-zinc-400">
+      <p className="mt-8 text-sm text-muted">
         Este texto é um placeholder — edite{" "}
-        <code className="rounded bg-zinc-100 px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-zinc-800">
+        <code className="rounded bg-surface px-1.5 py-0.5 font-mono text-[0.9em]">
           src/lib/site.ts
         </code>{" "}
         para colocar sua bio de verdade.

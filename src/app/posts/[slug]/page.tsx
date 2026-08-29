@@ -29,10 +29,7 @@ export default async function PostPage({ params }: PageProps<"/posts/[slug]">) {
 
   return (
     <article>
-      <Link
-        href="/"
-        className="mb-8 inline-block text-sm text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
-      >
+      <Link href="/" className="mb-8 inline-block text-sm text-muted hover:text-foreground">
         ← Voltar ao feed
       </Link>
 
@@ -42,13 +39,13 @@ export default async function PostPage({ params }: PageProps<"/posts/[slug]">) {
         ))}
       </div>
 
-      <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">{post.title}</h1>
-      <p className="mt-2 text-xs text-zinc-400 dark:text-zinc-500">
+      <h1 className="text-2xl font-bold text-foreground">{post.title}</h1>
+      <p className="mt-2 text-xs text-muted">
         {formatDate(post.date)} · {post.readingTime}
       </p>
 
       <div
-        className="prose prose-zinc mt-8 max-w-none dark:prose-invert prose-a:text-zinc-900 dark:prose-a:text-zinc-50"
+        className="prose mt-8 max-w-none"
         dangerouslySetInnerHTML={{ __html: post.html }}
       />
     </article>

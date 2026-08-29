@@ -28,7 +28,7 @@ export function SocialLinks({ className = "" }: { className?: string }) {
           target="_blank"
           rel="noopener noreferrer"
           aria-label={link.label}
-          className="text-zinc-400 transition-colors hover:text-zinc-900 dark:text-zinc-500 dark:hover:text-zinc-50"
+          className="text-muted transition-colors hover:text-foreground"
         >
           {ICONS[link.icon]}
         </a>

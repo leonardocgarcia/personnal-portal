@@ -14,9 +14,7 @@ export default async function Home({ searchParams }: PageProps<"/">) {
   return (
     <div>
       <div className="mb-10">
-        <h1 className="text-2xl font-bold text-balance text-zinc-900 dark:text-zinc-50">
-          {SITE.tagline}
-        </h1>
+        <h1 className="text-2xl font-bold text-balance text-foreground">{SITE.tagline}</h1>
       </div>
 
       <div className="mb-8">
@@ -24,9 +22,7 @@ export default async function Home({ searchParams }: PageProps<"/">) {
       </div>
 
       {posts.length === 0 ? (
-        <p className="text-sm text-zinc-500 dark:text-zinc-400">
-          Nenhum post com essa tag ainda.
-        </p>
+        <p className="text-sm text-muted">Nenhum post com essa tag ainda.</p>
       ) : (
         <div>
           {posts.map((post) => (

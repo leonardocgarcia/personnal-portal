@@ -4,17 +4,17 @@ import { SocialLinks } from "@/components/social-links";
 
 export function SiteHeader() {
   return (
-    <header className="border-b border-zinc-200 dark:border-zinc-800">
+    <header className="border-b border-border">
       <div className="mx-auto flex max-w-2xl items-center justify-between px-4 py-6 sm:px-0">
-        <Link href="/" className="text-base font-semibold text-zinc-900 dark:text-zinc-50">
+        <Link href="/" className="text-base font-semibold text-foreground">
           {SITE.name}
         </Link>
         <div className="flex items-center gap-6">
-          <nav className="flex items-center gap-4 text-sm text-zinc-500 dark:text-zinc-400">
-            <Link href="/" className="hover:text-zinc-900 dark:hover:text-zinc-50">
+          <nav className="flex items-center gap-4 text-sm text-muted">
+            <Link href="/" className="hover:text-foreground">
               Feed
             </Link>
-            <Link href="/sobre" className="hover:text-zinc-900 dark:hover:text-zinc-50">
+            <Link href="/sobre" className="hover:text-foreground">
               Sobre
             </Link>
           </nav>
