@@ -1,4 +1,5 @@
-import { getAllPosts, getPostsByTag } from "@/lib/posts";
+import { getPostsForViewer } from "@/lib/posts";
+import { isAdmin } from "@/lib/auth";
 import { isTag } from "@/lib/tags";
 import { SITE } from "@/lib/site";
 import { PostCard } from "@/components/post-card";
@@ -9,7 +10,9 @@ export default async function Home({ searchParams }: PageProps<"/">) {
   const tagParam = typeof params.tag === "string" ? params.tag : undefined;
   const activeTag = tagParam && isTag(tagParam) ? tagParam : undefined;
 
-  const posts = activeTag ? getPostsByTag(activeTag) : getAllPosts();
+  const admin = await isAdmin();
+  const allPosts = await getPostsForViewer(admin);
+  const posts = activeTag ? allPosts.filter((post) => post.tags.includes(activeTag)) : allPosts;
 
   return (
     <div>

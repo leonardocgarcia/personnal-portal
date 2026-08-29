@@ -1,20 +1,19 @@
-import fs from "node:fs";
-import path from "node:path";
-import matter from "gray-matter";
-import { remark } from "remark";
-import remarkGfm from "remark-gfm";
-import remarkHtml from "remark-html";
-import readingTime from "reading-time";
-import { Tag, isTag } from "./tags";
+import "server-only";
+import { and, desc, eq, ne } from "drizzle-orm";
+import { getDb } from "@/db";
+import { posts, type PostRow } from "@/db/schema";
+import { Tag, isTag } from "@/lib/tags";
 
-const POSTS_DIR = path.join(process.cwd(), "content", "posts");
+export type Visibility = "public" | "private";
 
 export type PostMeta = {
+  id: string;
   slug: string;
   title: string;
-  date: string; // ISO date string, e.g. 2026-08-20
-  tags: Tag[];
   description: string;
+  date: string; // ISO date, derived from createdAt
+  tags: Tag[];
+  visibility: Visibility;
   readingTime: string;
 };
 
@@ -22,62 +21,114 @@ export type Post = PostMeta & {
   html: string;
 };
 
-function readPostFile(fileName: string): { slug: string; raw: string } {
-  const slug = fileName.replace(/\.md$/, "");
-  const raw = fs.readFileSync(path.join(POSTS_DIR, fileName), "utf8");
-  return { slug, raw };
+function estimateReadingTime(html: string): string {
+  const words = html
+    .replace(/<[^>]*>/g, " ")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean).length;
+  const minutes = Math.max(1, Math.round(words / 200));
+  return `${minutes} min de leitura`;
 }
 
-function toMeta(slug: string, raw: string): { meta: PostMeta; content: string } {
-  const { data, content } = matter(raw);
-
-  const tags: Tag[] = Array.isArray(data.tags)
-    ? data.tags.filter((t: unknown): t is Tag => typeof t === "string" && isTag(t))
-    : [];
-
-  const meta: PostMeta = {
-    slug,
-    title: data.title ?? slug,
-    date: data.date ?? "1970-01-01",
-    tags,
-    description: data.description ?? "",
-    readingTime: readingTime(content).text,
+function toMeta(row: PostRow): PostMeta {
+  return {
+    id: row.id,
+    slug: row.slug,
+    title: row.title,
+    description: row.description,
+    date: row.createdAt.toISOString().slice(0, 10),
+    tags: row.tags.filter(isTag),
+    visibility: row.visibility,
+    readingTime: estimateReadingTime(row.contentHtml),
   };
-
-  return { meta, content };
 }
 
-function listPostFiles(): string[] {
-  if (!fs.existsSync(POSTS_DIR)) return [];
-  return fs.readdirSync(POSTS_DIR).filter((f) => f.endsWith(".md"));
+/** Posts visible to a public reader — never includes private posts. */
+export async function getAllPosts(): Promise<PostMeta[]> {
+  const db = getDb();
+  const rows = await db
+    .select()
+    .from(posts)
+    .where(eq(posts.visibility, "public"))
+    .orderBy(desc(posts.createdAt));
+  return rows.map(toMeta);
 }
 
-export function getAllPosts(): PostMeta[] {
-  const files = listPostFiles();
-  const posts = files.map((file) => {
-    const { slug, raw } = readPostFile(file);
-    return toMeta(slug, raw).meta;
-  });
-
-  return posts.sort((a, b) => (a.date < b.date ? 1 : -1));
+/** Posts visible to the current viewer — admins also see private posts. */
+export async function getPostsForViewer(isAdminViewer: boolean): Promise<PostMeta[]> {
+  const db = getDb();
+  const rows = isAdminViewer
+    ? await db.select().from(posts).orderBy(desc(posts.createdAt))
+    : await db
+        .select()
+        .from(posts)
+        .where(eq(posts.visibility, "public"))
+        .orderBy(desc(posts.createdAt));
+  return rows.map(toMeta);
 }
 
-export function getPostsByTag(tag: Tag): PostMeta[] {
-  return getAllPosts().filter((post) => post.tags.includes(tag));
+export async function getPostsByTag(tag: Tag, isAdminViewer = false): Promise<PostMeta[]> {
+  const all = await getPostsForViewer(isAdminViewer);
+  return all.filter((post) => post.tags.includes(tag));
 }
 
-export function getAllSlugs(): string[] {
-  return listPostFiles().map((f) => f.replace(/\.md$/, ""));
+/** A single post for a reader — returns null if private and viewer isn't admin. */
+export async function getPostBySlug(
+  slug: string,
+  isAdminViewer: boolean
+): Promise<Post | null> {
+  const db = getDb();
+  const [row] = await db.select().from(posts).where(eq(posts.slug, slug)).limit(1);
+  if (!row) return null;
+  if (row.visibility === "private" && !isAdminViewer) return null;
+  return { ...toMeta(row), html: row.contentHtml };
 }
 
-export async function getPostBySlug(slug: string): Promise<Post | null> {
-  const filePath = path.join(POSTS_DIR, `${slug}.md`);
-  if (!fs.existsSync(filePath)) return null;
+// --- Admin-only access below ---
 
-  const raw = fs.readFileSync(filePath, "utf8");
-  const { meta, content } = toMeta(slug, raw);
+export async function getPostByIdForAdmin(id: string): Promise<PostRow | null> {
+  const db = getDb();
+  const [row] = await db.select().from(posts).where(eq(posts.id, id)).limit(1);
+  return row ?? null;
+}
 
-  const processed = await remark().use(remarkGfm).use(remarkHtml).process(content);
+export async function slugExists(slug: string, excludeId?: string): Promise<boolean> {
+  const db = getDb();
+  const rows = await db
+    .select({ id: posts.id })
+    .from(posts)
+    .where(excludeId ? and(eq(posts.slug, slug), ne(posts.id, excludeId)) : eq(posts.slug, slug))
+    .limit(1);
+  return rows.length > 0;
+}
 
-  return { ...meta, html: processed.toString() };
+export type PostInput = {
+  slug: string;
+  title: string;
+  description: string;
+  contentHtml: string;
+  tags: Tag[];
+  visibility: Visibility;
+};
+
+export async function createPost(input: PostInput): Promise<PostRow> {
+  const db = getDb();
+  const [row] = await db.insert(posts).values(input).returning();
+  return row;
+}
+
+export async function updatePost(id: string, input: PostInput): Promise<PostRow | null> {
+  const db = getDb();
+  const [row] = await db
+    .update(posts)
+    .set({ ...input, updatedAt: new Date() })
+    .where(eq(posts.id, id))
+    .returning();
+  return row ?? null;
+}
+
+export async function deletePost(id: string): Promise<void> {
+  const db = getDb();
+  await db.delete(posts).where(eq(posts.id, id));
 }

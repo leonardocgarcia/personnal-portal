@@ -7,6 +7,11 @@ export function PostCard({ post }: { post: PostMeta }) {
   return (
     <article className="group border-b border-border py-6">
       <div className="mb-2 flex flex-wrap items-center gap-2">
+        {post.visibility === "private" && (
+          <span className="inline-flex items-center rounded-full bg-surface px-2.5 py-1 text-xs font-medium text-muted ring-1 ring-inset ring-border">
+            Privado
+          </span>
+        )}
         {post.tags.map((tag) => (
           <TagBadge key={tag} tag={tag} />
         ))}
