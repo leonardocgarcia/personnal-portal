@@ -2,8 +2,10 @@ import { getPostsForViewer } from "@/lib/posts";
 import { isAdmin } from "@/lib/auth";
 import { isTag } from "@/lib/tags";
 import { SITE } from "@/lib/site";
+import { SHELL, READ } from "@/lib/layout";
 import { PostCard } from "@/components/post-card";
 import { TagFilter } from "@/components/tag-filter";
+import { SubscribeForm } from "@/components/subscribe-form";
 
 export default async function Home({ searchParams }: PageProps<"/">) {
   const params = await searchParams;
@@ -16,23 +18,35 @@ export default async function Home({ searchParams }: PageProps<"/">) {
 
   return (
     <div>
-      <div className="mb-10">
-        <h1 className="text-2xl font-bold text-balance text-foreground">{SITE.tagline}</h1>
-      </div>
+      <div className={`${SHELL} border-b border-border pb-12`}>
+        <h1 className="max-w-2xl text-3xl font-bold text-balance text-foreground sm:text-4xl">
+          {SITE.tagline}
+        </h1>
+        <p className="mt-3 max-w-xl text-base text-muted">{SITE.bio}</p>
 
-      <div className="mb-8">
-        <TagFilter active={activeTag} />
-      </div>
-
-      {posts.length === 0 ? (
-        <p className="text-sm text-muted">Nenhum post com essa tag ainda.</p>
-      ) : (
-        <div>
-          {posts.map((post) => (
-            <PostCard key={post.slug} post={post} />
-          ))}
+        <div id="assinar" className="mt-8 max-w-md scroll-mt-24">
+          <p className="mb-2 text-sm font-medium text-foreground">
+            Receba um aviso a cada novo post
+          </p>
+          <SubscribeForm />
         </div>
-      )}
+      </div>
+
+      <div className={`${READ} py-10`}>
+        <div className="mb-8">
+          <TagFilter active={activeTag} />
+        </div>
+
+        {posts.length === 0 ? (
+          <p className="text-sm text-muted">Nenhum post com essa tag ainda.</p>
+        ) : (
+          <div>
+            {posts.map((post) => (
+              <PostCard key={post.slug} post={post} />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

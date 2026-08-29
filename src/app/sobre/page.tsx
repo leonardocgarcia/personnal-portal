@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SITE } from "@/lib/site";
+import { READ } from "@/lib/layout";
 import { SocialLinks } from "@/components/social-links";
 import { Avatar } from "@/components/avatar";
 
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function SobrePage() {
   return (
-    <div>
+    <div className={READ}>
       <div className="flex items-center gap-4">
         <Avatar name={SITE.name} size="lg" />
         <div>

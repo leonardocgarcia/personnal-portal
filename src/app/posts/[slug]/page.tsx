@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getPostBySlug } from "@/lib/posts";
 import { isAdmin } from "@/lib/auth";
 import { formatDate } from "@/lib/format";
+import { READ } from "@/lib/layout";
 import { TagBadge } from "@/components/tag-badge";
 
 export async function generateMetadata({
@@ -28,7 +29,7 @@ export default async function PostPage({ params }: PageProps<"/posts/[slug]">) {
   if (!post) notFound();
 
   return (
-    <article>
+    <article className={READ}>
       <Link href="/" className="mb-8 inline-block text-sm text-muted hover:text-foreground">
         ← Voltar ao feed
       </Link>

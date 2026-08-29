@@ -20,3 +20,11 @@ export const posts = pgTable("posts", {
 
 export type PostRow = typeof posts.$inferSelect;
 export type NewPostRow = typeof posts.$inferInsert;
+
+export const subscribers = pgTable("subscribers", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  email: text("email").notNull().unique(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+export type SubscriberRow = typeof subscribers.$inferSelect;
