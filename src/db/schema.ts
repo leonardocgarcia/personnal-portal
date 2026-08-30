@@ -28,3 +28,9 @@ export const subscribers = pgTable("subscribers", {
 });
 
 export type SubscriberRow = typeof subscribers.$inferSelect;
+
+export const loginAttempts = pgTable("login_attempts", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  ip: text("ip").notNull(),
+  attemptedAt: timestamp("attempted_at", { withTimezone: true }).notNull().defaultNow(),
+});

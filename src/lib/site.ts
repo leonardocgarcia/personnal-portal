@@ -1,5 +1,6 @@
 export const SITE = {
   name: "Leonardo Garcia",
+  url: "https://leocgarcia.me",
   tagline: "Pensamentos, estudos e recomendações — anotado em público.",
   bio: "Aqui eu registro o que estou pensando, estudando e recomendando. Ainda estou definindo exatamente sobre o que vou escrever — por enquanto, pense nisso como um caderno de anotações público, sem compromisso com tema fixo ou frequência.",
 };

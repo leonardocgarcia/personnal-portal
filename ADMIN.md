@@ -10,6 +10,8 @@ Como acessar a área de administração e publicar posts (texto, imagens e víde
 
 A sessão dura 30 dias (cookie assinado). Para sair, clique em **Sair** no topo do painel.
 
+Depois de 5 tentativas de senha erradas do mesmo IP em 15 minutos, o login fica bloqueado temporariamente — mesmo que a próxima tentativa seja com a senha certa. É proteção contra tentativa de adivinhar a senha por força bruta; se acontecer com você por engano, espere alguns minutos e tente de novo.
+
 ## 2. Criar um post novo
 
 1. No painel, clique em **+ Novo post**

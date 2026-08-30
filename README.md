@@ -9,7 +9,10 @@ Projeto pessoal para publicação de pensamentos, estudos e recomendações — 
 - Postgres via [Neon](https://neon.tech) (Vercel Marketplace) — armazena os posts
 - [Vercel Blob](https://vercel.com/docs/vercel-blob) — armazena imagens e vídeos enviados pelo admin
 - [Tiptap](https://tiptap.dev) — editor rich text da área de admin
-- Autenticação: sessão via cookie assinado (JWT/`jose`), senha única de admin
+- Autenticação: sessão via cookie assinado (JWT/`jose`), senha única de admin, com rate-limit de tentativas por IP
+- SEO: `sitemap.xml`, `robots.txt` e imagens de Open Graph geradas dinamicamente (`next/og`)
+- RSS em `/feed.xml`
+- [Vercel Analytics](https://vercel.com/docs/analytics)
 
 ## Rodando localmente
 

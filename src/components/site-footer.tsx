@@ -22,7 +22,12 @@ export function SiteFooter() {
             Sobre
           </Link>
         </nav>
-        <SocialLinks />
+        <div className="flex items-center gap-4">
+          <a href="/feed.xml" className="text-xs text-muted hover:text-foreground">
+            RSS
+          </a>
+          <SocialLinks />
+        </div>
       </div>
     </footer>
   );
