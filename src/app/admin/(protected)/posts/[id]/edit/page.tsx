@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { PostForm } from "@/components/admin/post-form";
 import { updatePostAction } from "@/app/admin/(protected)/posts/actions";
 import { getPostByIdForAdmin } from "@/lib/posts";
-import { isTag } from "@/lib/tags";
+import { Tag, normalizeTag } from "@/lib/tags";
 
 export const metadata: Metadata = {
   title: "Edit post",
@@ -26,7 +26,7 @@ export default async function EditPostPage({ params }: PageProps<"/admin/posts/[
         initial={{
           title: post.title,
           description: post.description,
-          tags: post.tags.filter(isTag),
+          tags: post.tags.map(normalizeTag).filter((tag): tag is Tag => tag !== undefined),
           visibility: post.visibility,
           contentHtml: post.contentHtml,
         }}

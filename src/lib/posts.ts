@@ -2,7 +2,7 @@ import "server-only";
 import { and, desc, eq, ne } from "drizzle-orm";
 import { getDb } from "@/db";
 import { posts, type PostRow } from "@/db/schema";
-import { Tag, isTag } from "@/lib/tags";
+import { Tag, normalizeTag } from "@/lib/tags";
 
 export type Visibility = "public" | "private";
 
@@ -38,7 +38,7 @@ function toMeta(row: PostRow): PostMeta {
     title: row.title,
     description: row.description,
     date: row.createdAt.toISOString().slice(0, 10),
-    tags: row.tags.filter(isTag),
+    tags: row.tags.map(normalizeTag).filter((tag): tag is Tag => tag !== undefined),
     visibility: row.visibility,
     readingTime: estimateReadingTime(row.contentHtml),
   };

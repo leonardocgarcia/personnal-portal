@@ -1,6 +1,6 @@
 import { getPostsForViewer } from "@/lib/posts";
 import { isAdmin } from "@/lib/auth";
-import { isTag } from "@/lib/tags";
+import { normalizeTag } from "@/lib/tags";
 import { SITE } from "@/lib/site";
 import { SHELL, READ } from "@/lib/layout";
 import { PostCard } from "@/components/post-card";
@@ -10,7 +10,7 @@ import { SubscribeForm } from "@/components/subscribe-form";
 export default async function Home({ searchParams }: PageProps<"/">) {
   const params = await searchParams;
   const tagParam = typeof params.tag === "string" ? params.tag : undefined;
-  const activeTag = tagParam && isTag(tagParam) ? tagParam : undefined;
+  const activeTag = tagParam ? normalizeTag(tagParam) : undefined;
 
   const admin = await isAdmin();
   const allPosts = await getPostsForViewer(admin);
