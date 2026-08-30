@@ -28,8 +28,10 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
+    /* dark mode inverts the same two brand colors: the off-white that's
+       the background in light mode becomes the text color here. */
     --background: #14201a;
-    --foreground: #eae5d8;
+    --foreground: #faf7f1;
     --muted: #93a594;
     --border: #24312a;
     --surface: #1b2721;
