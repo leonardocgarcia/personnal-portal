@@ -24,9 +24,9 @@ export default async function Home({ searchParams }: PageProps<"/">) {
         </h1>
         <p className="mt-3 max-w-xl text-base text-muted">{SITE.bio}</p>
 
-        <div id="assinar" className="mt-8 max-w-md scroll-mt-24">
+        <div id="subscribe" className="mt-8 max-w-md scroll-mt-24">
           <p className="mb-2 text-sm font-medium text-foreground">
-            Receba um aviso a cada novo post
+            Get notified about every new post
           </p>
           <SubscribeForm />
         </div>
@@ -38,7 +38,7 @@ export default async function Home({ searchParams }: PageProps<"/">) {
         </div>
 
         {posts.length === 0 ? (
-          <p className="text-sm text-muted">Nenhum post com essa tag ainda.</p>
+          <p className="text-sm text-muted">No posts with this tag yet.</p>
         ) : (
           <div>
             {posts.map((post) => (

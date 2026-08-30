@@ -31,13 +31,13 @@ export default async function PostPage({ params }: PageProps<"/posts/[slug]">) {
   return (
     <article className={READ}>
       <Link href="/" className="mb-8 inline-block text-sm text-muted hover:text-foreground">
-        ← Voltar ao feed
+        ← Back to feed
       </Link>
 
       <div className="mb-3 flex flex-wrap items-center gap-2">
         {post.visibility === "private" && (
           <span className="inline-flex items-center rounded-full bg-surface px-2.5 py-1 text-xs font-medium text-muted ring-1 ring-inset ring-border">
-            Privado
+            Private
           </span>
         )}
         {post.tags.map((tag) => (

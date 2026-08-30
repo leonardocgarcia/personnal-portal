@@ -6,7 +6,7 @@ import { getPostByIdForAdmin } from "@/lib/posts";
 import { isTag } from "@/lib/tags";
 
 export const metadata: Metadata = {
-  title: "Editar post",
+  title: "Edit post",
   robots: { index: false, follow: false },
 };
 
@@ -19,10 +19,10 @@ export default async function EditPostPage({ params }: PageProps<"/admin/posts/[
 
   return (
     <div>
-      <h1 className="mb-6 text-xl font-bold text-foreground">Editar post</h1>
+      <h1 className="mb-6 text-xl font-bold text-foreground">Edit post</h1>
       <PostForm
         action={action}
-        submitLabel="Salvar alterações"
+        submitLabel="Save changes"
         initial={{
           title: post.title,
           description: post.description,

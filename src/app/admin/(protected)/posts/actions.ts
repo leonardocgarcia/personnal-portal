@@ -51,12 +51,12 @@ function readPostInput(formData: FormData): PostInput | { error: string } {
   const visibility = String(formData.get("visibility") ?? "public") as Visibility;
   const tags = formData.getAll("tags").map(String).filter(isTag);
 
-  if (!title) return { error: "Título é obrigatório." };
+  if (!title) return { error: "Title is required." };
   if (!contentHtmlRaw || contentHtmlRaw === "<p></p>") {
-    return { error: "O post precisa ter algum conteúdo." };
+    return { error: "The post needs some content." };
   }
   if (visibility !== "public" && visibility !== "private") {
-    return { error: "Visibilidade inválida." };
+    return { error: "Invalid visibility." };
   }
 
   return {
@@ -73,7 +73,7 @@ export async function createPostAction(
   _prevState: PostFormState,
   formData: FormData
 ): Promise<PostFormState> {
-  if (!(await isAdmin())) return { error: "Não autorizado." };
+  if (!(await isAdmin())) return { error: "Not authorized." };
 
   const input = readPostInput(formData);
   if ("error" in input) return input;
@@ -94,7 +94,7 @@ export async function updatePostAction(
   _prevState: PostFormState,
   formData: FormData
 ): Promise<PostFormState> {
-  if (!(await isAdmin())) return { error: "Não autorizado." };
+  if (!(await isAdmin())) return { error: "Not authorized." };
 
   const input = readPostInput(formData);
   if ("error" in input) return input;
@@ -105,7 +105,7 @@ export async function updatePostAction(
   }
 
   const updated = await updatePost(id, { ...input, slug });
-  if (!updated) return { error: "Post não encontrado." };
+  if (!updated) return { error: "Post not found." };
 
   revalidatePath("/");
   revalidatePath("/admin");

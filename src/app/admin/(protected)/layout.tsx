@@ -16,21 +16,21 @@ export default async function ProtectedAdminLayout({
       <div className="mb-8 flex items-center justify-between border-b border-border pb-4">
         <nav className="flex items-center gap-4 text-sm">
           <Link href="/admin" className="font-semibold text-foreground">
-            Painel
+            Dashboard
           </Link>
           <Link href="/admin/posts/new" className="text-muted hover:text-foreground">
-            Novo post
+            New post
           </Link>
           <Link href="/admin/subscribers" className="text-muted hover:text-foreground">
-            Assinantes
+            Subscribers
           </Link>
           <Link href="/" className="text-muted hover:text-foreground">
-            Ver site
+            View site
           </Link>
         </nav>
         <form action={logout}>
           <button type="submit" className="text-sm text-muted hover:text-foreground">
-            Sair
+            Log out
           </button>
         </form>
       </div>

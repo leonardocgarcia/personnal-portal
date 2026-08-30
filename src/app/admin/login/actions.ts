@@ -17,14 +17,14 @@ export async function login(_prevState: LoginState, formData: FormData): Promise
   const ip = await clientIp();
 
   if (await isLoginRateLimited(ip)) {
-    return { error: "Muitas tentativas. Aguarde alguns minutos e tente de novo." };
+    return { error: "Too many attempts. Please wait a few minutes and try again." };
   }
 
   const password = String(formData.get("password") ?? "");
 
   if (!password || !verifyPassword(password)) {
     await recordFailedLogin(ip);
-    return { error: "Senha incorreta." };
+    return { error: "Incorrect password." };
   }
 
   await clearLoginAttempts(ip);

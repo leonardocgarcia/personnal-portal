@@ -3,7 +3,7 @@ import { TAGS, TAG_LABELS, Tag } from "@/lib/tags";
 
 export function TagFilter({ active }: { active?: Tag }) {
   return (
-    <nav className="flex flex-wrap items-center gap-2" aria-label="Filtrar por tag">
+    <nav className="flex flex-wrap items-center gap-2" aria-label="Filter by tag">
       <Link
         href="/"
         className={`rounded-full px-3 py-1 text-sm font-medium transition-colors ${
@@ -12,7 +12,7 @@ export function TagFilter({ active }: { active?: Tag }) {
             : "bg-surface text-muted hover:bg-surface-hover"
         }`}
       >
-        Tudo
+        All
       </Link>
       {TAGS.map((tag) => (
         <Link

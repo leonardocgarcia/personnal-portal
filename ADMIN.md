@@ -1,59 +1,60 @@
-# Guia do admin
+# Admin guide
 
-Como acessar a área de administração e publicar posts (texto, imagens e vídeos).
+How to access the admin area and publish posts (text, images, and videos).
 
-## 1. Acessar o painel
+## 1. Log in
 
-1. Vá em **`/admin/login`** (ex: https://leocgarcia.me/admin/login)
-2. Digite a senha de admin (ver [Trocar a senha](#trocar-a-senha) se não souber onde consultar)
-3. Você é redirecionado para **`/admin`**, o painel com a lista de todos os posts
+1. Go to **`/admin/login`** (e.g. https://leocgarcia.me/admin/login)
+2. Enter the admin password (see [Changing the password](#changing-the-password) if you're not sure where to find it)
+3. You're redirected to **`/admin`**, the dashboard with the list of all posts
 
-A sessão dura 30 dias (cookie assinado). Para sair, clique em **Sair** no topo do painel.
+The session lasts 30 days (signed cookie). To log out, click **Log out** at the top of the dashboard.
 
-Depois de 5 tentativas de senha erradas do mesmo IP em 15 minutos, o login fica bloqueado temporariamente — mesmo que a próxima tentativa seja com a senha certa. É proteção contra tentativa de adivinhar a senha por força bruta; se acontecer com você por engano, espere alguns minutos e tente de novo.
+After 5 wrong-password attempts from the same IP within 15 minutes, login gets temporarily locked out — even if the next attempt has the right password. This protects against brute-force guessing; if it happens to you by accident, wait a few minutes and try again.
 
-## 2. Criar um post novo
+## 2. Create a new post
 
-1. No painel, clique em **+ Novo post**
-2. Preencha:
-   - **Título** — obrigatório. A URL do post (`/posts/algo`) é gerada automaticamente a partir dele.
-   - **Descrição curta** — opcional, aparece no card do feed e como descrição de SEO.
-   - **Tags** — marque uma ou mais: Pensamento, Estudo, Recomendação.
-   - **Visibilidade**:
-     - **Público** — qualquer visitante do site vê.
-     - **Privado** — só aparece pra você, logado como admin. Visitantes recebem 404 se tentarem acessar a URL diretamente.
-3. Escreva o conteúdo no editor:
-   - Barra de ferramentas: negrito, itálico, tachado, títulos (H2/H3), listas, citação, link
-   - **Imagem**: clique em "Imagem", escolha o arquivo do seu computador — é enviado para o Vercel Blob e inserido automaticamente
-   - **Vídeo**: mesma lógica, clique em "Vídeo" e escolha o arquivo (máx. 50MB por arquivo)
-4. Clique em **Publicar**
+1. In the dashboard, click **+ New post**
+2. Fill in:
+   - **Title** — required. The post's URL (`/posts/something`) is generated from it automatically.
+   - **Short description** — optional, shows up on the feed card and as the SEO description.
+   - **Tags** — check one or more: Thought, Study, Recommendation.
+   - **Visibility**:
+     - **Public** — any visitor to the site can see it.
+     - **Private** — only shows up for you, logged in as admin. Visitors get a 404 if they try to open the URL directly.
+3. Write the content in the editor:
+   - Toolbar: bold, italic, strikethrough, headings (H2/H3), lists, quote, link
+   - **Image**: click "Image", pick a file from your computer — it's uploaded to Vercel Blob and inserted automatically
+   - **Video**: same idea, click "Video" and pick a file (max 50MB per file)
+4. Click **Publish**
 
-## 3. Editar ou excluir um post
+## 3. Edit or delete a post
 
-No painel (`/admin`), cada post tem os links **Editar** e **Excluir** — excluir pede uma confirmação em duas etapas antes de apagar de fato.
+In the dashboard (`/admin`), every post has **Edit** and **Delete** links — deleting asks for a two-step confirmation before it actually happens.
 
-## 4. Visibilidade pública vs. privada
+## 4. Public vs. private visibility
 
-- Posts **públicos** aparecem no feed (`/`) e são indexáveis por buscadores.
-- Posts **privados** só aparecem no feed e na página do post quando você está autenticado como admin; para qualquer outra pessoa, a URL retorna 404 e a página não é indexada.
-- **Nota sobre mídia**: imagens/vídeos enviados ficam no Vercel Blob com URLs públicas, mas com nomes aleatórios e não-listados em lugar nenhum — ninguém encontra o arquivo sem ter o link exato. Isso é adequado para notas privadas, mas não é uma barreira de acesso real (não é um requisito de login para abrir o arquivo direto). Não é o lugar pra guardar algo verdadeiramente sensível.
+- **Public** posts show up on the feed (`/`) and are indexable by search engines.
+- **Private** posts only show up in the feed and on the post page while you're logged in as admin; for anyone else, the URL returns a 404 and the page isn't indexed.
+- **Note on media**: uploaded images/videos live on Vercel Blob with public URLs, but with random, unlisted names — no one finds the file without the exact link. That's fine for private notes, but it isn't a real access barrier (opening the file directly doesn't require login). Don't use it for anything genuinely sensitive.
 
-## Trocar a senha
+## Changing the password
 
-A senha do admin fica na variável de ambiente `ADMIN_PASSWORD`, configurada na Vercel (não está em nenhum arquivo do repositório). Para trocar:
+The admin password lives in the `ADMIN_PASSWORD` environment variable, set on Vercel (it's not in any file in the repository). To change it:
 
 ```bash
 npx vercel env rm ADMIN_PASSWORD production preview development
-echo -n "sua-nova-senha" | npx vercel env add ADMIN_PASSWORD production
-echo -n "sua-nova-senha" | npx vercel env add ADMIN_PASSWORD preview
-echo -n "sua-nova-senha" | npx vercel env add ADMIN_PASSWORD development
+echo -n "your-new-password" | npx vercel env add ADMIN_PASSWORD production
+echo -n "your-new-password" | npx vercel env add ADMIN_PASSWORD preview
+echo -n "your-new-password" | npx vercel env add ADMIN_PASSWORD development
 npx vercel env pull .env.local --yes
 ```
 
-Depois disso, todas as sessões já abertas continuam válidas até expirar (30 dias) — se quiser invalidar sessões antigas na hora, troque também `ADMIN_SESSION_SECRET` do mesmo jeito.
+After that, any sessions that are already open stay valid until they expire (30 days) — if you want to invalidate old sessions right away, rotate `ADMIN_SESSION_SECRET` the same way.
 
-## Onde os dados ficam
+## Where the data lives
 
-- **Posts** (título, tags, conteúdo, visibilidade): Postgres (Neon), via Vercel Marketplace — tabela `posts`, schema em `src/db/schema.ts`
-- **Imagens e vídeos**: Vercel Blob
-- Não há mais arquivos Markdown no repositório — todo o conteúdo é editado pelo painel `/admin`
+- **Posts** (title, tags, content, visibility): Postgres (Neon), via Vercel Marketplace — `posts` table, schema in `src/db/schema.ts`
+- **Images and videos**: Vercel Blob
+- **Subscribers**: Postgres, `subscribers` table — export from `/admin/subscribers`
+- There are no Markdown files left in the repository — all content is edited through the `/admin` dashboard

@@ -16,7 +16,7 @@ export function CopyEmailsButton({ emails }: { emails: string[] }) {
       }}
       className="rounded-md border border-border px-3 py-1.5 text-sm font-medium text-foreground hover:bg-surface disabled:opacity-50"
     >
-      {copied ? "Copiado!" : "Copiar e-mails"}
+      {copied ? "Copied!" : "Copy emails"}
     </button>
   );
 }

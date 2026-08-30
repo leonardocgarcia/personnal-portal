@@ -13,7 +13,7 @@ export default async function AdminLoginPage() {
 
   return (
     <div className="mx-auto max-w-sm py-16">
-      <h1 className="mb-6 text-xl font-bold text-foreground">Área do admin</h1>
+      <h1 className="mb-6 text-xl font-bold text-foreground">Admin area</h1>
       <LoginForm />
     </div>
   );

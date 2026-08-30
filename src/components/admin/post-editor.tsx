@@ -87,7 +87,7 @@ export function PostEditor({
           editor.chain().focus().insertContent({ type: "video", attrs: { src: result.url } }).run();
         }
       } catch {
-        setUploadError("Falha no upload. Tente novamente.");
+        setUploadError("Upload failed. Please try again.");
       } finally {
         setUploading(false);
       }
@@ -101,21 +101,21 @@ export function PostEditor({
     <div className="rounded-md border border-border">
       <div className="flex flex-wrap items-center gap-1 border-b border-border bg-surface/50 p-2">
         <ToolbarButton
-          label="Negrito"
+          label="Bold"
           active={editor.isActive("bold")}
           onClick={() => editor.chain().focus().toggleBold().run()}
         >
           B
         </ToolbarButton>
         <ToolbarButton
-          label="Itálico"
+          label="Italic"
           active={editor.isActive("italic")}
           onClick={() => editor.chain().focus().toggleItalic().run()}
         >
           <span className="italic">I</span>
         </ToolbarButton>
         <ToolbarButton
-          label="Tachado"
+          label="Strikethrough"
           active={editor.isActive("strike")}
           onClick={() => editor.chain().focus().toggleStrike().run()}
         >
@@ -123,14 +123,14 @@ export function PostEditor({
         </ToolbarButton>
         <span className="mx-1 h-4 w-px bg-border" />
         <ToolbarButton
-          label="Título 2"
+          label="Heading 2"
           active={editor.isActive("heading", { level: 2 })}
           onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
         >
           H2
         </ToolbarButton>
         <ToolbarButton
-          label="Título 3"
+          label="Heading 3"
           active={editor.isActive("heading", { level: 3 })}
           onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
         >
@@ -138,25 +138,25 @@ export function PostEditor({
         </ToolbarButton>
         <span className="mx-1 h-4 w-px bg-border" />
         <ToolbarButton
-          label="Lista"
+          label="Bullet list"
           active={editor.isActive("bulletList")}
           onClick={() => editor.chain().focus().toggleBulletList().run()}
         >
-          • Lista
+          • List
         </ToolbarButton>
         <ToolbarButton
-          label="Lista numerada"
+          label="Numbered list"
           active={editor.isActive("orderedList")}
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
         >
-          1. Lista
+          1. List
         </ToolbarButton>
         <ToolbarButton
-          label="Citação"
+          label="Quote"
           active={editor.isActive("blockquote")}
           onClick={() => editor.chain().focus().toggleBlockquote().run()}
         >
-          &ldquo;Cit.&rdquo;
+          &ldquo;Quote&rdquo;
         </ToolbarButton>
         <span className="mx-1 h-4 w-px bg-border" />
         <ToolbarButton
@@ -170,35 +170,35 @@ export function PostEditor({
           Link
         </ToolbarButton>
         <ToolbarButton
-          label="Inserir imagem"
+          label="Insert image"
           disabled={uploading}
           onClick={() => imageInputRef.current?.click()}
         >
-          Imagem
+          Image
         </ToolbarButton>
         <ToolbarButton
-          label="Inserir vídeo"
+          label="Insert video"
           disabled={uploading}
           onClick={() => videoInputRef.current?.click()}
         >
-          Vídeo
+          Video
         </ToolbarButton>
         <span className="mx-1 h-4 w-px bg-border" />
         <ToolbarButton
-          label="Desfazer"
+          label="Undo"
           onClick={() => editor.chain().focus().undo().run()}
           disabled={!editor.can().undo()}
         >
           ↶
         </ToolbarButton>
         <ToolbarButton
-          label="Refazer"
+          label="Redo"
           onClick={() => editor.chain().focus().redo().run()}
           disabled={!editor.can().redo()}
         >
           ↷
         </ToolbarButton>
-        {uploading && <span className="text-xs text-muted">Enviando…</span>}
+        {uploading && <span className="text-xs text-muted">Uploading…</span>}
       </div>
 
       {linkOpen && (
@@ -233,7 +233,7 @@ export function PostEditor({
               setLinkOpen(false);
             }}
           >
-            Aplicar
+            Apply
           </button>
         </div>
       )}

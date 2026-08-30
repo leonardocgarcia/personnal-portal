@@ -30,7 +30,7 @@ export function PostForm({
     <form action={formAction} className="flex flex-col gap-6">
       <div>
         <label htmlFor="title" className="mb-1.5 block text-sm font-medium text-foreground">
-          Título
+          Title
         </label>
         <input
           id="title"
@@ -44,8 +44,8 @@ export function PostForm({
 
       <div>
         <label htmlFor="description" className="mb-1.5 block text-sm font-medium text-foreground">
-          Descrição curta{" "}
-          <span className="font-normal text-muted">(aparece no feed e no SEO)</span>
+          Short description{" "}
+          <span className="font-normal text-muted">(shown in the feed and for SEO)</span>
         </label>
         <textarea
           id="description"
@@ -75,7 +75,7 @@ export function PostForm({
       </fieldset>
 
       <fieldset>
-        <legend className="mb-1.5 block text-sm font-medium text-foreground">Visibilidade</legend>
+        <legend className="mb-1.5 block text-sm font-medium text-foreground">Visibility</legend>
         <div className="flex gap-4">
           <label className="flex items-center gap-1.5 text-sm text-foreground">
             <input
@@ -85,7 +85,7 @@ export function PostForm({
               defaultChecked={(initial?.visibility ?? "public") === "public"}
               className="accent-[color:var(--accent)]"
             />
-            Público — qualquer visitante vê
+            Public — visible to everyone
           </label>
           <label className="flex items-center gap-1.5 text-sm text-foreground">
             <input
@@ -95,13 +95,13 @@ export function PostForm({
               defaultChecked={initial?.visibility === "private"}
               className="accent-[color:var(--accent)]"
             />
-            Privado — só o admin vê
+            Private — only you can see it
           </label>
         </div>
       </fieldset>
 
       <div>
-        <span className="mb-1.5 block text-sm font-medium text-foreground">Conteúdo</span>
+        <span className="mb-1.5 block text-sm font-medium text-foreground">Content</span>
         <PostEditor initialContent={initial?.contentHtml ?? ""} onChange={setContentHtml} />
         <input type="hidden" name="contentHtml" value={contentHtml} readOnly />
       </div>
@@ -114,7 +114,7 @@ export function PostForm({
           disabled={pending}
           className="rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background transition-opacity hover:opacity-90 disabled:opacity-60"
         >
-          {pending ? "Salvando…" : submitLabel}
+          {pending ? "Saving…" : submitLabel}
         </button>
       </div>
     </form>

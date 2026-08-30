@@ -4,7 +4,7 @@ import { formatDate } from "@/lib/format";
 import { CopyEmailsButton } from "@/components/admin/copy-emails-button";
 
 export const metadata: Metadata = {
-  title: "Assinantes",
+  title: "Subscribers",
   robots: { index: false, follow: false },
 };
 
@@ -15,7 +15,7 @@ export default async function SubscribersPage() {
     <div>
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-xl font-bold text-foreground">
-          Assinantes <span className="font-normal text-muted">({subscribers.length})</span>
+          Subscribers <span className="font-normal text-muted">({subscribers.length})</span>
         </h1>
         <div className="flex items-center gap-3">
           <CopyEmailsButton emails={subscribers.map((s) => s.email)} />
@@ -23,18 +23,18 @@ export default async function SubscribersPage() {
             href="/admin/subscribers/export"
             className="rounded-md bg-foreground px-3 py-1.5 text-sm font-medium text-background hover:opacity-90"
           >
-            Baixar CSV
+            Download CSV
           </a>
         </div>
       </div>
 
       <p className="mb-6 text-sm text-muted">
-        Envio automático de e-mail ainda não está configurado — use essa lista pra avisar as
-        pessoas por fora (ex: colar no seu provedor de e-mail).
+        Automatic email sending isn&rsquo;t set up yet — use this list to notify people some
+        other way (e.g. paste it into your email provider).
       </p>
 
       {subscribers.length === 0 ? (
-        <p className="text-sm text-muted">Ninguém se inscreveu ainda.</p>
+        <p className="text-sm text-muted">No one has subscribed yet.</p>
       ) : (
         <div className="divide-y divide-border border-t border-border">
           {subscribers.map((s) => (

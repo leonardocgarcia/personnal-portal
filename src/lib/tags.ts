@@ -1,11 +1,11 @@
-export const TAGS = ["pensamento", "estudo", "recomendacao"] as const;
+export const TAGS = ["thought", "study", "recommendation"] as const;
 
 export type Tag = (typeof TAGS)[number];
 
 export const TAG_LABELS: Record<Tag, string> = {
-  pensamento: "Pensamento",
-  estudo: "Estudo",
-  recomendacao: "Recomendação",
+  thought: "Thought",
+  study: "Study",
+  recommendation: "Recommendation",
 };
 
 export function isTag(value: string): value is Tag {

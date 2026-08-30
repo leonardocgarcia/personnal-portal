@@ -12,7 +12,7 @@ export function LoginForm() {
     <form action={formAction} className="flex flex-col gap-4">
       <div>
         <label htmlFor="password" className="mb-1.5 block text-sm font-medium text-foreground">
-          Senha de admin
+          Admin password
         </label>
         <input
           id="password"
@@ -32,7 +32,7 @@ export function LoginForm() {
         disabled={pending}
         className="rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background transition-opacity hover:opacity-90 disabled:opacity-60"
       >
-        {pending ? "Entrando…" : "Entrar"}
+        {pending ? "Logging in…" : "Log in"}
       </button>
     </form>
   );

@@ -30,7 +30,7 @@ export function SubscribeForm({ className = "" }: { className?: string }) {
           type="email"
           name="email"
           required
-          placeholder="seu@email.com"
+          placeholder="you@email.com"
           className="w-full flex-1 rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground outline-none focus:border-accent sm:w-auto"
         />
         <button
@@ -38,7 +38,7 @@ export function SubscribeForm({ className = "" }: { className?: string }) {
           disabled={pending}
           className="shrink-0 rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background transition-opacity hover:opacity-90 disabled:opacity-60"
         >
-          {pending ? "Enviando…" : "Assinar"}
+          {pending ? "Submitting…" : "Subscribe"}
         </button>
       </form>
       {state.message && (
