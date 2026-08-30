@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { SITE } from "@/lib/site";
-import { SHELL } from "@/lib/layout";
+import { BAR } from "@/lib/layout";
 import { SocialLinks } from "@/components/social-links";
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
   return (
     <footer className="border-t border-border">
-      <div className={`${SHELL} flex flex-col gap-4 py-8 sm:flex-row sm:items-center sm:justify-between`}>
+      <div className={`${BAR} flex flex-col gap-4 py-8 sm:flex-row sm:items-center sm:justify-between`}>
         <span className="text-xs text-muted">
           © {year} · {SITE.name}
         </span>
